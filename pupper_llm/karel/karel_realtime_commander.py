@@ -78,7 +78,9 @@ class KarelRealtimeCommanderNode(Node):
         #     ["move", "turn_left", "bark"]
 
         # Your code here:
-        pass
+        # lines = response.split('\n')
+        # for line in lines:
+
 
         
         if all_commands:
@@ -131,8 +133,38 @@ class KarelRealtimeCommanderNode(Node):
             #   - For "dance" actions, the full dance is ~12.0 seconds; use await asyncio.sleep(12.0)
             #   - For most normal moves and turns, use 0.5 seconds.
             # See the KarelPupper API for supported commands and their method names.
-                pass
-            
+            elif "turn_left" == command:
+                self.pupper.turn_left()
+                await asyncio.sleep(0.5)
+            elif "turn_right" == command:
+                self.pupper.turn_right()
+                await asyncio.sleep(0.5)
+            elif "move_left" == command:
+                self.pupper.move_left()
+                await asyncio.sleep(0.5)
+            elif "move_right" == command:
+                self.pupper.move_right()
+                await asyncio.sleep(0.5)
+            elif command in ["move_back", "move_backwards"]:
+                self.pupper.move_backward()
+                await asyncio.sleep(0.5)
+            elif command in ["wiggle", "wag"]:
+                logger.info('Queueing command: Wiggle')
+                self.pupper.wiggle()
+                await asyncio.sleep(5.5)
+            elif "bob" == command:
+                self.pupper.bob()
+                await asyncio.sleep(5.5)
+            elif "dance" == command:
+                self.pupper.dance()
+                await asyncio.sleep(12.0)
+            elif "bark" == command:
+                logger.info('Queueing command: Bark')
+                # Bark plays audio, give it time to complete
+                await asyncio.sleep(2.0)
+            elif "stop" == command:
+                logger.info('Queueing command: Stop')
+                self.pupper.stop()
             else:
                 logger.warning(f"⚠️  Unknown command: {command}")
                 return False
