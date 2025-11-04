@@ -95,9 +95,9 @@ class RealtimeVoiceNode(Node):
         You will output the result of each command in a multi-line format, outputting earlier actions first. Each individual action should also include any relevant semantic, location, and situational information. 
         
         For example, if the command is 'hey Pupper, walk forward a little bit, then turn left 90 degrees, then go forward a lot', your output should look like:
-         You got it! First, I'll walk forward a little - maybe around 3 feet. (newline)
+         You got it! First, I'll walk forward a little. (newline)
          Then I'll turn left 90 degrees. (newline)
-         Before I finish, I should also go forward farther than when I first moved - maybe 6 feet. (newline)
+         Before I finish, I should also go forward twice as far as I just did. (newline)
         
         DO NOT omit action steps, and DO NOT create action steps when they are not required. SEPARATE EACH LINE WITH A NEWLINE CHARACTER. 
 
