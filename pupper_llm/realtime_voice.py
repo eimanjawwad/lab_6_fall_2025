@@ -119,7 +119,7 @@ Your response should also include playful language that is reflective of your ro
     
     async def _delayed_unmute(self):
         """Unmute microphone after 3 second delay to prevent echo."""
-        await asyncio.sleep(3.0)  # Longer delay to ensure no echo
+        await asyncio.sleep(10.0)  # Longer delay to ensure no echo
         if self.agent_speaking:
             self.agent_speaking = False
             # Clear any residual audio that might have accumulated
