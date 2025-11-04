@@ -78,11 +78,11 @@ class KarelRealtimeCommanderNode(Node):
         #     ["move", "turn_left", "bark"]
 
         # Your code here:
-        # lines = response.split('\n')
-        # for line in lines:
+        lines = response.split('\n')
+        for line in lines:
+            if line != "":
+                all_commands += self.extract_commands_from_line(line.strip())
 
-
-        
         if all_commands:
             logger.info(f"📋 Commands (in order): {all_commands}")
             # Queue commands with timestamp in sequential order
@@ -113,7 +113,8 @@ class KarelRealtimeCommanderNode(Node):
             line = "<move, turn_left>"
             returns ['move', 'turn_left']
         """
-        pass
+        commands = line.split(", ")
+        return [c.lower().replace(" ", "_") for c in commands]
     
     async def execute_command(self, command: str) -> bool:
         """Execute a single robot command."""
