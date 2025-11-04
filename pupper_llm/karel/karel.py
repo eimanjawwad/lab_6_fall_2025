@@ -80,7 +80,21 @@ class KarelPupper:
         Remove the 'pass' statement after you implement the steps above.
         """
         # ==== TODO: Implement the steps above ====
-        pass
+        move_cmd = Twist()
+        linear_speed = 0.5  
+        half_bob_duration = 0.2  
+
+        start_time = time.time()
+        direction = 1  
+
+        while time.time() - start_time < bob_time:
+            move_cmd.linear.x = direction * linear_speed
+            self.publisher.publish(move_cmd)
+            rclpy.spin_once(self.node, timeout_sec=0.01)
+            time.sleep(half_bob_duration)
+            direction *= -1  #dir switched
+
+        self.stop()
 
         self.node.get_logger().info('Bob!')
 
