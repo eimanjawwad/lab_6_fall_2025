@@ -213,7 +213,36 @@ class KarelPupper:
         # TODO: Create your own awesome Pupper dance move sequence here!
         # Use combinations of self.wiggle(), self.turn_left(), self.turn_right(), self.bob(), and self.stop().
         # Be creative and choreograph the most exciting dance possible!
-        pass
+        self.node.get_logger().info("Starting Pupper Dance Routine!")
+
+        self.wiggle(wiggle_time=3, play_sound=False)
+        time.sleep(0.5)
+
+        self.bob(bob_time=3, play_sound=False)
+        time.sleep(0.5)
+
+        self.turn_left()
+        time.sleep(0.3)
+        self.turn_left()
+        time.sleep(0.3)
+        self.turn_right()
+        time.sleep(0.3)
+        self.turn_right()
+        time.sleep(0.3)
+
+        self.move_forward()
+        time.sleep(0.5)
+        self.move_backward()
+        time.sleep(0.5)
+        self.move_forward()
+        time.sleep(0.5)
+        self.move_backward()
+        time.sleep(0.5)
+
+        self.wiggle(wiggle_time=2, play_sound=False)
+
+        self.node.get_logger().info("Dance complete! 🎵")
+        self.stop()
 
 
     def stop(self):
