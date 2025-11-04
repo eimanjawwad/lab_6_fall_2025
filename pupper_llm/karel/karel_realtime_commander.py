@@ -113,7 +113,7 @@ class KarelRealtimeCommanderNode(Node):
             line = "<move, turn_left>"
             returns ['move', 'turn_left']
         """
-        commands = ["forward", "turn left", "turn right", "move left", "move right", "go left", "go right", "backward", "back", "reverse", "bob", "wiggle", "dance", "bark", "stop", "strafe left", "strafe right", "rotate left", "rotate right", "wag"]
+        commands = ["forward", "turn left", "turn right", "move left", "move right", "go left", "go right", "backward", "back", "reverse", "bob", "wiggle", "dance", "bark", "stop", "walk left", "walk right", "rotate left", "rotate right", "wag"]
         order = {}
         for c in commands:
             if c in line:
@@ -144,10 +144,10 @@ class KarelRealtimeCommanderNode(Node):
             elif command in ["turn_right", "rotate_right"]:
                 self.pupper.turn_right()
                 await asyncio.sleep(0.5)
-            elif command in ["move_left", "strafe_left", "go_left"]:
+            elif command in ["move_left", "walk_left", "go_left"]:
                 self.pupper.move_left()
                 await asyncio.sleep(0.5)
-            elif command in ["move_right", "strafe_right", "go_right"]:
+            elif command in ["move_right", "walk_right", "go_right"]:
                 self.pupper.move_right()
                 await asyncio.sleep(0.5)
             elif command in ["move_back", "backwards", "back", "reverse"]:
