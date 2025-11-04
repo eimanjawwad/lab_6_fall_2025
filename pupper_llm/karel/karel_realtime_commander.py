@@ -113,7 +113,7 @@ class KarelRealtimeCommanderNode(Node):
             line = "<move, turn_left>"
             returns ['move', 'turn_left']
         """
-        commands = ["move", "go", "forward", "turn left", "turn right", "move left", "move right", "go_left", "go_right", "backward", "back", "reverse", "bob", "wiggle", "dance", "bark", "stop", "strafe left", "strafe right", "rotate left", "rotate right", "wag"]
+        commands = ["forward", "turn left", "turn right", "move left", "move right", "go left", "go right", "backward", "back", "reverse", "bob", "wiggle", "dance", "bark", "stop", "strafe left", "strafe right", "rotate left", "rotate right", "wag"]
         order = {}
         for c in commands:
             if c in line:
@@ -127,7 +127,7 @@ class KarelRealtimeCommanderNode(Node):
             
             # TODO: Implement the mapping from canonical command names (e.g., "move", "turn_left", "bark", etc.) to the appropriate KarelPupper action and its timing.
             # One complete mapping is shown as an example!
-            if command in ["move", "go", "forward"]:
+            if command == "forward":
                 self.pupper.move_forward()
                 await asyncio.sleep(0.5)  # Hint: Use await asyncio.sleep(seconds) to pace each action!
             # TODO: Add additional elifs for the other actions that KarelPupper supports,
@@ -166,6 +166,7 @@ class KarelRealtimeCommanderNode(Node):
             elif "bark" == command:
                 logger.info('Queueing command: Bark')
                 # Bark plays audio, give it time to complete
+                self.pupper.bark()
                 await asyncio.sleep(2.0)
             elif "stop" == command:
                 logger.info('Queueing command: Stop')
