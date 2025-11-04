@@ -49,7 +49,7 @@ class KarelRealtimeCommanderNode(Node):
         
         # Command queue with timestamps
         self.command_queue = asyncio.Queue()
-        self.processing_commands = False
+        self.processing_commands = True
         self.command_timeout = 20.0  # Clear commands older than 20 seconds
         
         logger.info('Karel Realtime Commander initialized')
@@ -113,7 +113,7 @@ class KarelRealtimeCommanderNode(Node):
             line = "<move, turn_left>"
             returns ['move', 'turn_left']
         """
-        commands = ["move", "go", "forward", "turn left", "turn right", "move left", "move right", "go_left", "go_right", "backward", "back", "reverse", "bob", "wiggle", "dance", "bark", "stop", "strafe left", "strafe right", "rotate left", "rotate right", "wag"]
+        commands = ["move", "go", "forward", "turn left", "turn right", "move left", "move right", "go_left", "go_right", "backward", "back", "reverse", "bob", "wiggle", "dance", "bark", "stop", "start", "strafe left", "strafe right", "rotate left", "rotate right", "wag"]
         output=[]
         for c in commands:
             if c in line:
@@ -170,6 +170,10 @@ class KarelRealtimeCommanderNode(Node):
             elif "stop" == command:
                 logger.info('Queueing command: Stop')
                 self.pupper.stop()
+                self.processing_commands = False
+            elif "start" == command:
+                logger.info('Queueing command: Start')
+                self.processing_commands = True
             else:
                 logger.warning(f"⚠️  Unknown command: {command}")
                 return False
@@ -200,11 +204,21 @@ class KarelRealtimeCommanderNode(Node):
                 age = time.time() - timestamp
                 if age > self.command_timeout:
                     logger.warning(f"⏰ Discarding stale command '{command}' (age: {age:.1f}s)")
-                    continue
+                    continue                
                 
-                # Execute command
-                await self.execute_command(command)
-                
+                # Only if not stop
+                if self.processing_commands:                    
+                    # Execute command
+                    await self.execute_command(command)
+                else: 
+                    # Empties what's in the command queue
+                    while not self.command_queue.empty():
+                        try:
+                            item = self.command_queue.get_nowait()
+                            print(f"Removed command in command queue: {item}")
+                        except asyncio.QueueEmpty:
+                            break 
+                                
             except asyncio.TimeoutError:
                 continue
             except Exception as e:
