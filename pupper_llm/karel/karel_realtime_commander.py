@@ -49,6 +49,7 @@ class KarelRealtimeCommanderNode(Node):
         
         # Command queue with timestamps
         self.command_queue = asyncio.Queue()
+        self.last_command = ""
         self.processing_commands = True
         self.command_timeout = 20.0  # Clear commands older than 20 seconds
         
@@ -113,12 +114,14 @@ class KarelRealtimeCommanderNode(Node):
             line = "<move, turn_left>"
             returns ['move', 'turn_left']
         """
-        commands = ["move", "go", "forward", "turn left", "turn right", "move left", "move right", "go_left", "go_right", "backward", "back", "reverse", "bob", "wiggle", "dance", "bark", "stop", "start", "strafe left", "strafe right", "rotate left", "rotate right", "wag"]
-        output=[]
+        if "repeat" in line:
+            return self.last_command
+        commands = ["move", "go", "forward", "turn left", "turn right", "move left", "move right", "go_left", "go_right", "backward", "back", "reverse", "bob", "wiggle", "dance", "bark", "stop", "start", "strafe left", "strafe right", "rotate left", "rotate right", "wag", "repeat"]
+        order = {}
         for c in commands:
             if c in line:
-                output.append(c.replace(" ", "_"))
-        return output
+                order[line.find(c)] = c.replace(" ", "_")
+        return list(order.keys())
     
     async def execute_command(self, command: str) -> bool:
         """Execute a single robot command."""
@@ -209,6 +212,7 @@ class KarelRealtimeCommanderNode(Node):
                 # Only if not stop
                 if self.processing_commands:                    
                     # Execute command
+                    self.last_command = command
                     await self.execute_command(command)
                 else: 
                     # Empties what's in the command queue
