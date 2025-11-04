@@ -114,11 +114,11 @@ class KarelRealtimeCommanderNode(Node):
             returns ['move', 'turn_left']
         """
         commands = ["move", "go", "forward", "turn left", "turn right", "move left", "move right", "go_left", "go_right", "backward", "back", "reverse", "bob", "wiggle", "dance", "bark", "stop", "strafe left", "strafe right", "rotate left", "rotate right", "wag"]
-        output=[]
+        order = {}
         for c in commands:
             if c in line:
-                output.append(c.replace(" ", "_"))
-        return output
+                order[line.find(c)] = c.replace(" ", "_")
+        return list(order.keys())
     
     async def execute_command(self, command: str) -> bool:
         """Execute a single robot command."""
