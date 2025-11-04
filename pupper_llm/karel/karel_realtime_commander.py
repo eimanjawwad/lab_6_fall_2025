@@ -113,7 +113,7 @@ class KarelRealtimeCommanderNode(Node):
             line = "<move, turn_left>"
             returns ['move', 'turn_left']
         """
-        commands = ["move", "go", "forward", "turn left", "turn right", "move left", "move right", "move backward", "move back", "bob", "wiggle", "dance", "bark", "stop", "strafe left", "strafe right", "rotate left", "rotate right", "back up", "reverse", "wag"]
+        commands = ["move", "go", "forward", "turn left", "turn right", "move left", "move right", "go_left", "go_right", "backward", "back", "reverse", "bob", "wiggle", "dance", "bark", "stop", "strafe left", "strafe right", "rotate left", "rotate right", "wag"]
         output=[]
         for c in commands:
             if c in line:
@@ -144,13 +144,13 @@ class KarelRealtimeCommanderNode(Node):
             elif command in ["turn_right", "rotate_right"]:
                 self.pupper.turn_right()
                 await asyncio.sleep(0.5)
-            elif command in ["move_left", "strafe_left"]:
+            elif command in ["move_left", "strafe_left", "go_left"]:
                 self.pupper.move_left()
                 await asyncio.sleep(0.5)
-            elif command in ["move_right", "strafe_right"]:
+            elif command in ["move_right", "strafe_right", "go_right"]:
                 self.pupper.move_right()
                 await asyncio.sleep(0.5)
-            elif command in ["move_back", "move_backwards", "back_up", "reverse"]:
+            elif command in ["move_back", "backwards", "back", "reverse"]:
                 self.pupper.move_backward()
                 await asyncio.sleep(0.5)
             elif command in ["wiggle", "wag"]:
