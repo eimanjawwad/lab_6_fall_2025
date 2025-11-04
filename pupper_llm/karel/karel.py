@@ -91,7 +91,13 @@ class KarelPupper:
         - Use the move() helper function that is implemented above, or manually construct move_cmd = Twist().
         - Publish the Twist command for a set duration, then stop.
         """
-        pass
+        move_cmd = Twist()
+        move_cmd.linear.x = 1.0
+        move_cmd.angular.z = 0.0 
+        self.publisher.publish(move_cmd)
+        rclpy.spin_once(self.node, timeout_sec=1.0)
+        self.node.get_logger().info('Move forward...')
+        self.stop()
 
     def move_backward(self):
         """
@@ -100,7 +106,13 @@ class KarelPupper:
         - Use move() or create your own Twist message.
         - Be careful with speed—backward motion is often best slower.
         """
-        pass
+        move_cmd = Twist()
+        move_cmd.linear.x = -1.0
+        move_cmd.angular.z = 0.0 
+        self.publisher.publish(move_cmd)
+        rclpy.spin_once(self.node, timeout_sec=1.0)
+        self.node.get_logger().info('Move backward...')
+        self.stop()
 
     def move_left(self):
         """
@@ -108,7 +120,13 @@ class KarelPupper:
         - Set an appropriate linear.y value for left strafe.
         - Use move() or build the move_cmd yourself.
         """
-        pass
+        move_cmd = Twist()
+        move_cmd.linear.y = -1.0
+        move_cmd.angular.z = 0.0 
+        self.publisher.publish(move_cmd)
+        rclpy.spin_once(self.node, timeout_sec=1.0)
+        self.node.get_logger().info('Move Left...')
+        self.stop()
 
     def move_right(self):
         """
@@ -116,7 +134,13 @@ class KarelPupper:
         - Set an appropriate negative linear.y value for right strafe.
         - Use move() or create your own move_cmd.
         """
-        pass
+        move_cmd = Twist()
+        move_cmd.linear.y = 1.0
+        move_cmd.angular.z = 0.0 
+        self.publisher.publish(move_cmd)
+        rclpy.spin_once(self.node, timeout_sec=1.0)
+        self.node.get_logger().info('Move Right...')
+        self.stop()
 
     def turn_left(self):
         """
@@ -124,7 +148,13 @@ class KarelPupper:
         - Set a positive angular.z value for left rotation.
         - Use move() or build your own move_cmd.
         """
-        pass
+        move_cmd = Twist()
+        move_cmd.linear.x = 0.0
+        move_cmd.angular.z = -0.8
+        self.publisher.publish(move_cmd)
+        rclpy.spin_once(self.node, timeout_sec=1.0)
+        self.node.get_logger().info('Turn Left...')
+        self.stop()
 
     def turn_right(self):
         """
@@ -132,7 +162,13 @@ class KarelPupper:
         - Set a negative angular.z value for right rotation.
         - Use move() or make your own Twist message.
         """
-        pass
+        move_cmd = Twist()
+        move_cmd.linear.x = 0.0
+        move_cmd.angular.z = 0.8
+        self.publisher.publish(move_cmd)
+        rclpy.spin_once(self.node, timeout_sec=1.0)
+        self.node.get_logger().info('Turn Right...')
+        self.stop()
 
     def bark(self):
         self.node.get_logger().info('Bark...')
