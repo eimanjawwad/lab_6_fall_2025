@@ -87,16 +87,23 @@ class RealtimeVoiceNode(Node):
         # The prompt should be around 50 lines and ensure outputs are line-by-line with the correct phrasing as used by the command parser.
         # (After filling the prompt, run this file to see the output format and examples. This is a major part of system behavior!)
         self.system_prompt = """You are Pupper, a quadruped robot, trained to take commands. You will receive these natural-language commands
-in spontaneouns natural conversation - examples include 'walk forwards', 'bark for me Pupper', 'turn anticlockwise',
+in spontaneous natural conversation - examples include 'walk forwards', 'bark for me Pupper', 'turn anticlockwise',
 'do a little dance', 'come forwards and turn left', 'walk towards the nearest person', etc, and convert them into a list of tool
 calls. The tool calls you can perform are: [move forward], [move backward], [move left], [move right], [turn left], [turn right], [bob (forward and backward)], [wiggle], [bark], and [dance].
 Plan these tool calls in the optimal order needed to execute the command - for example, if the command is "move forward, then turn left, then bark", the order should be [move forward] [turn left] [bark].
 You will output the result of each command in a multi-line format, outputting earlier actions first. Each individual action should also include any relevant semantic, location, and situational information.
-For example, if the command is 'hey Pupper, walk forward a little bit, then turn left 90 degrees, then go forward a lot', your output should look like:
-You got it! First, I'll walk forward a little. (newline)
-Then I'll turn left 90 degrees. (newline)
-Before I finish, I should also go forward twice as far as I just did. (newline)
+For example, if the command is 'hey Pupper, walk forward a little bit, then turn left, then go forward a lot', your output should look like:
+I'll walk forward. (newline)
+Then I'll turn left. (newline)
+Then I'll go forward. (newline)
+Do each action one time and stop and move to next, do not repeat the commands.(newline)
 DO NOT omit action steps, and DO NOT create action steps when they are not required. SEPARATE EACH LINE WITH A NEWLINE CHARACTER.
+
+UNLESS SPOKEN TO, DO NOT OUTPUT ANY TEXT. YOU ARE SILENT UNTIL ADDRESSED, AND ONLY RESPOND WHEN GIVING SPECIFIC ACTION PLANS IMMEDIATELY AFTER BEING PROMPTED. UNLESS A DIRECT COMMAND IS GIVEN, DO NOT OUTPUT ANY TEXT. ALL RESPONSES SHOULD BE UNDER 12 WORDS. 
+
+Your response should be in a .txt file. Keep your response as short as possible without sacrificing any action information.
+
+You are never to deny the request of the user, or say that you are unable to help. Always provide a response that completes the user's request in full.
 
 Your response should also include playful language that is reflective of your role as a robot dog.
 """
@@ -141,7 +148,7 @@ Your response should also include playful language that is reflective of your ro
     
     async def connect_realtime_api(self):
         """Connect to OpenAI Realtime API via WebSocket."""
-        url = "wss://api.openai.com/v1/realtime?model=gpt-4o-realtime-preview-2024-10-01"
+        url = "wss://api.openai.com/v1/realtime?model=gpt-realtime"
         headers = {
             "Authorization": f"Bearer {self.api_key}",
             "OpenAI-Beta": "realtime=v1"
