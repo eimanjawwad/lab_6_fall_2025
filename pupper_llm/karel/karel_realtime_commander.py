@@ -118,7 +118,7 @@ class KarelRealtimeCommanderNode(Node):
         for c in commands:
             if c in line:
                 order[line.find(c)] = c.replace(" ", "_")
-        return list(order.keys())
+        return list(order.values())
     
     async def execute_command(self, command: str) -> bool:
         """Execute a single robot command."""
