@@ -141,7 +141,7 @@ Your response should also include playful language that is reflective of your ro
     
     async def connect_realtime_api(self):
         """Connect to OpenAI Realtime API via WebSocket."""
-        url = "wss://api.openai.com/v1/realtime?model=gpt-realtime"
+        url = "wss://api.openai.com/v1/realtime?model=gpt-4o-realtime-preview-2024-10-01"
         headers = {
             "Authorization": f"Bearer {self.api_key}",
             "OpenAI-Beta": "realtime=v1"
