@@ -113,7 +113,7 @@ class KarelRealtimeCommanderNode(Node):
             line = "<move, turn_left>"
             returns ['move', 'turn_left']
         """
-        commands = ["forward", "turn left", "turn right", "counter_clockwise", "clockwise", "move left", "move right", "go left", "go right", "backward", "back", "reverse", "bob", "wiggle", "dance", "bark", "stop", "walk left", "walk right", "rotate left", "rotate right", "wag"]
+        commands = ["forward", "turn left", "turn right", "counter clockwise", "clockwise", "move left", "move right", "go left", "go right", "backward", "back", "reverse", "bob", "wiggle", "dance", "bark", "stop", "walk left", "walk right", "rotate left", "rotate right", "wag"]
         order = {}
         for c in commands:
             if c in line:
@@ -138,10 +138,10 @@ class KarelRealtimeCommanderNode(Node):
             #   - For "dance" actions, the full dance is ~12.0 seconds; use await asyncio.sleep(12.0)
             #   - For most normal moves and turns, use 0.5 seconds.
             # See the KarelPupper API for supported commands and their method names.
-            elif command in ["turn_left", "rotate_left", "clockwise"]:
+            elif command in ["turn_left", "rotate_left", "counter_clockwise"]:
                 self.pupper.turn_left()
                 await asyncio.sleep(0.5)
-            elif command in ["turn_right", "rotate_right", "counter_clockwise"]:
+            elif command in ["turn_right", "rotate_right", "clockwise"]:
                 self.pupper.turn_right()
                 await asyncio.sleep(0.5)
             elif command in ["move_left", "walk_left", "go_left"]:
